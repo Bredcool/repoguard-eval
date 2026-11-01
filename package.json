@@ -1,0 +1,22 @@
+{
+    "name": "repoguard-eval",
+    "version": "1.0.0",
+    "private": true,
+    "description": "Evidence-based evaluation benchmark for AI-powered Go repository debugging.",
+    "workspaces": [
+        "apps/*"
+    ],
+    "scripts": {
+        "dev": "npm run dev --workspace @repoguard/web",
+        "build": "npm run build --workspace @repoguard/web",
+        "test": "npm run test --workspace @repoguard/web",
+        "typecheck": "npm run typecheck --workspace @repoguard/web"
+    },
+    "engines": {
+        "node": ">=22",
+        "npm": ">=10"
+    },
+    "allowScripts": {
+        "esbuild@0.28.2": true
+    }
+}

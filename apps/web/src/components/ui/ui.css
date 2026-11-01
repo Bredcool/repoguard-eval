@@ -1,0 +1,159 @@
+/* =========================================
+   Button
+========================================= */
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    font-family: inherit;
+    font-weight: var(--font-weight-semibold);
+    line-height: 1;
+    white-space: nowrap;
+    transition:
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        color var(--transition-fast),
+        opacity var(--transition-fast);
+}
+
+.button--sm {
+    min-height: 32px;
+    padding: 0 var(--space-3);
+    font-size: var(--font-size-xs);
+}
+
+.button--md {
+    min-height: 40px;
+    padding: 0 var(--space-4);
+    font-size: var(--font-size-sm);
+}
+
+.button--primary {
+    background: var(--color-accent);
+    color: var(--color-text-inverse);
+}
+
+.button--primary:hover:not(:disabled) {
+    background: var(--color-accent-hover);
+}
+
+.button--secondary {
+    border-color: var(--color-border-strong);
+    background: var(--color-bg-elevated);
+    color: var(--color-text-primary);
+}
+
+.button--secondary:hover:not(:disabled) {
+    background: var(--color-bg-hover);
+    border-color: var(--color-text-muted);
+}
+
+.button--danger {
+    background: var(--color-danger);
+    color: var(--color-text-inverse);
+}
+
+.button--danger:hover:not(:disabled) {
+    background: #fca5a5;
+}
+
+.button:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
+/* Button loading indicator */
+
+.button__spinner {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: var(--radius-full);
+    animation: button-spin 700ms linear infinite;
+}
+
+@keyframes button-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* =========================================
+   Card
+========================================= */
+
+.card {
+    min-width: 0;
+    padding: var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-bg-secondary);
+    box-shadow: var(--shadow-sm);
+}
+
+/* =========================================
+   Badge
+========================================= */
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    min-height: 22px;
+    padding: 2px var(--space-2);
+    border: 1px solid transparent;
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    line-height: 1.4;
+    white-space: nowrap;
+}
+
+.badge--neutral {
+    border-color: var(--color-border-strong);
+    background: var(--color-bg-elevated);
+    color: var(--color-text-secondary);
+}
+
+.badge--success {
+    border-color: var(--color-accent-border);
+    background: var(--color-accent-subtle);
+    color: var(--color-accent);
+}
+
+.badge--warning {
+    border-color: rgb(251 191 36 / 30%);
+    background: rgb(251 191 36 / 10%);
+    color: var(--color-warning);
+}
+
+.badge--danger {
+    border-color: rgb(248 113 113 / 30%);
+    background: rgb(248 113 113 / 10%);
+    color: var(--color-danger);
+}
+
+.badge--info {
+    border-color: rgb(96 165 250 / 30%);
+    background: rgb(96 165 250 / 10%);
+    color: var(--color-info);
+}
+
+/* =========================================
+   Overview Foundation Card
+========================================= */
+
+.overview-foundation-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+}

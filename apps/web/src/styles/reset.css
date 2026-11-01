@@ -1,0 +1,74 @@
+/* Consistent box sizing */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Remove default spacing */
+
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+figure,
+blockquote,
+dl,
+dd {
+    margin: 0;
+}
+
+/* Document defaults */
+
+html {
+    min-width: 320px;
+    min-height: 100%;
+    scroll-behavior: smooth;
+}
+
+/* Media elements */
+
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+/* Form elements */
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+/* Button defaults */
+
+button {
+    cursor: pointer;
+}
+
+/* Links */
+
+a {
+    color: inherit;
+}
+
+/* Lists */
+
+ul,
+ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
