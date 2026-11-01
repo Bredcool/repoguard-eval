@@ -55,3 +55,6 @@ compile_commands.json
 # Temporary files
 .tmp/
 .temp/
+
+# TypeScript build information
+*.tsbuildinfo
