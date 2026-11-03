@@ -40,6 +40,15 @@ __pycache__/
 .pytest_cache/
 .venv/
 venv/
+*.egg-info/
+
+# Python testing and coverage
+.coverage
+.coverage.*
+htmlcov/
+
+# Python runtime data
+apps/evaluator/data/experiments/*.json
 
 # Go
 *.exe

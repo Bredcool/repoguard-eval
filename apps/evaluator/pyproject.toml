@@ -1,0 +1,41 @@
+
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "repoguard-eval"
+version = "0.1.0"
+description = "Evidence-based evaluation framework for AI-powered repository debugging."
+readme = "README.md"
+requires-python = ">=3.13,<3.14"
+license = { text = "MIT" }
+authors = [
+    { name = "RepoGuard-Eval Contributors" }
+]
+
+dependencies = [
+    "pydantic>=2.11,<3.0",
+    "pydantic-settings>=2.10,<3.0",
+    "typer>=0.19,<1.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.4,<10.0",
+    "pytest-cov>=6.0,<8.0"
+]
+
+[project.scripts]
+repoguard = "repoguard_eval.cli:app"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-ra"

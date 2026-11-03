@@ -1,0 +1,9 @@
+{
+    "task_id": "example-task",
+    "name": "Baseline evaluation",
+    "status": "pending",
+    "metadata": {
+        "model": "baseline",
+        "temperature": 0.0
+    }
+}

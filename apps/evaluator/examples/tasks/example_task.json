@@ -1,0 +1,40 @@
+{
+    "id": "example-task",
+    "title": "Fix authentication validation bug",
+    "version": "1.0.0",
+    "difficulty": "medium",
+    "status": "ready",
+    "repository": {
+        "url": "https://github.com/example/repository",
+        "branch": "main",
+        "commit": "abc123"
+    },
+    "requirements": {
+        "description": "Fix the authentication validation bug.",
+        "objectives": [
+            "Identify the root cause",
+            "Implement a minimal fix",
+            "Add regression tests"
+        ],
+        "constraints": [
+            "Preserve existing API behavior"
+        ]
+    },
+    "evaluation": {
+        "evaluation_type": "bug_fix",
+        "test_commands": [
+            "go test ./..."
+        ],
+        "timeout_seconds": 300,
+        "expected_files": [
+            "internal/auth/auth.go"
+        ]
+    },
+    "metadata": {
+        "author": "RepoGuard-Eval",
+        "tags": [
+            "go",
+            "authentication"
+        ]
+    }
+}
