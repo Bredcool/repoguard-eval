@@ -1,0 +1,47 @@
+{
+    "id": "rg-go-001",
+    "title": "Transaction Atomicity Failure",
+    "version": "1.0.0",
+    "difficulty": "medium",
+    "status": "draft",
+    "repository": {
+        "path": "repository",
+        "branch": "main"
+    },
+    "requirements": {
+        "description": "Fix a transaction handling defect that allows partial persistence when an order operation fails.",
+        "objectives": [
+            "Ensure order creation and inventory reservation execute within one transaction.",
+            "Ensure all changes commit together.",
+            "Ensure failures do not leave partial persisted state.",
+            "Preserve existing error propagation behavior."
+        ],
+        "constraints": [
+            "Do not remove existing business operations.",
+            "Do not bypass transaction handling.",
+            "Do not modify tests to hide failures.",
+            "Keep the public service API compatible."
+        ]
+    },
+    "evaluation": {
+        "evaluation_type": "bug_fix",
+        "test_commands": [
+            "go test ./..."
+        ],
+        "timeout_seconds": 120,
+        "expected_files": [
+            "order/service.go"
+        ]
+    },
+    "metadata": {
+        "author": "RepoGuard-Eval",
+        "created_at": "2026-11-06",
+        "tags": [
+            "go",
+            "transaction",
+            "atomicity",
+            "rollback",
+            "database"
+        ]
+    }
+}

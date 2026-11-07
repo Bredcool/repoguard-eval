@@ -1,0 +1,21 @@
+{
+  "name": "RepoGuard-Eval Benchmark Suite",
+  "version": "1.0.0",
+  "description": "Evidence-based benchmark suite for AI coding agent repository debugging.",
+  "tasks": [
+    {
+      "id": "rg-go-001",
+      "pack": "go/transaction-integrity",
+      "language": "go",
+      "category": "transaction_integrity",
+      "difficulty": "medium",
+      "version": "1.0.0",
+      "status": "development",
+      "validation": {
+        "reference": "passed",
+        "baseline": "failed_as_expected",
+        "test_count": 11
+      }
+    }
+  ]
+}

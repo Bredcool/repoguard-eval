@@ -1,0 +1,14 @@
+diff --git a/order/service.go b/order/service.go
+--- a/order/service.go
++++ b/order/service.go
+@@ -47,10 +47,6 @@
+ 		return err
+ 	}
+ 
+-	// BUG: The transaction commits before inventory reservation.
+-	if err := tx.Commit(); err != nil {
+-		return err
+-	}
+ 
+ 	if err := tx.ReserveInventory(
+ 		ctx,
