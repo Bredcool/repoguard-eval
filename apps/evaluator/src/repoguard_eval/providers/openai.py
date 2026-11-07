@@ -328,7 +328,7 @@ class OpenAIProvider(BaseProvider):
                 ):
                     parts.append(block["text"])
 
-        text = "\\n".join(parts).strip()
+        text = "\n".join(parts).strip()
         return text or None
 
     @classmethod
@@ -343,7 +343,7 @@ class OpenAIProvider(BaseProvider):
 
         candidate = text.strip()
         fenced = re.fullmatch(
-            r"`{3}(?:json)?\\s*(.*?)\\s*`{3}",
+            r"`{3}(?:json)?\s*(.*?)\s*`{3}",
             candidate,
             flags=re.IGNORECASE | re.DOTALL,
         )
