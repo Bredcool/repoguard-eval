@@ -17,12 +17,15 @@ from repoguard_eval.grading.schemas import (
 
 def build_orchestrator(
     *,
-    provider: BaseProvider,
-    task_loader: Callable[[str], TaskDefinition],
+    artifact_dir: Path,
+    model: str,
+    max_concurrency: int = 1,
+    provider: BaseProvider | None = None,
+    task_loader: Callable[[str], TaskDefinition] | None = None,
     request_builder: Callable[
         [TaskDefinition, UUID, str], ProviderRequest
-    ],
-    sandbox_factory: Callable,
+    ] | None = None,
+    sandbox_factory: Callable | None = None,
     grader: Callable[
         [
             TaskDefinition,
@@ -31,11 +34,27 @@ def build_orchestrator(
             ExecutionEvidence,
         ],
         EvaluationResult,
-    ],
-    artifact_dir: Path,
-    model: str,
-    max_concurrency: int = 1,
+    ] | None = None,
 ) -> ExperimentOrchestrator:
+    dependencies = {
+        "provider": provider,
+        "task_loader": task_loader,
+        "request_builder": request_builder,
+        "sandbox_factory": sandbox_factory,
+        "grader": grader,
+    }
+
+    missing = [
+        name for name, value in dependencies.items()
+        if value is None
+    ]
+
+    if missing:
+        raise RuntimeError(
+            "Experiment runtime is not configured. Missing adapters: "
+            + ", ".join(missing)
+        )
+
     return ExperimentOrchestrator(
         provider=provider,
         task_loader=task_loader,
