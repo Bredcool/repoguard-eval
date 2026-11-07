@@ -26,7 +26,7 @@ def build_runtime(
 ) -> ExperimentOrchestrator:
     settings = get_provider_settings()
 
-    if not settings.is_ready():
+    if not settings.is_ready:
         raise RuntimeConfigurationError(
             "Provider configuration is incomplete. "
             "Configure OPENAI_API_KEY and model settings."

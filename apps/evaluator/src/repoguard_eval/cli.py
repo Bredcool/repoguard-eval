@@ -7,7 +7,6 @@ import typer
 from repoguard_eval.config import get_settings
 from repoguard_eval.experiments import create_experiment, save_experiment
 from repoguard_eval.tasks import load_task
-from repoguard_eval.orchestration import ExperimentOrchestrator
 
 import asyncio
 from datetime import datetime, timezone
@@ -102,48 +101,6 @@ def create_experiment_command(
     typer.echo(f"Name: {experiment.name}")
     typer.echo(f"Status: {experiment.status}")
     typer.echo(f"Saved to: {experiment_path}")
-
-
-@experiment_app.command("run")
-def run_experiment(
-    task_ids: list[str] = typer.Option(
-        ...,
-        "--task-id",
-        help="Task ID to evaluate. Can be supplied multiple times.",
-    ),
-    model: str = typer.Option(
-        ...,
-        "--model",
-        help="Model identifier.",
-    ),
-    benchmark_name: str = typer.Option(
-        "repoguard",
-        "--benchmark-name",
-    ),
-    benchmark_version: str = typer.Option(
-        "1.0.0",
-        "--benchmark-version",
-    ),
-    max_concurrency: int = typer.Option(
-        1,
-        "--max-concurrency",
-        min=1,
-    ),
-) -> None:
-    """Run an AI evaluation experiment."""
-
-    experiment_id = uuid4()
-
-    typer.echo(f"Experiment ID: {experiment_id}")
-    typer.echo(f"Tasks: {', '.join(task_ids)}")
-    typer.echo(f"Model: {model}")
-
-    typer.echo(
-        "Experiment orchestration requires configured provider, "
-        "sandbox, prompt builder, and grader adapters."
-    )
-
-    raise typer.Exit(code=2)
 
 
 @experiment_app.command("run")

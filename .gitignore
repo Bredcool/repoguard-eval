@@ -67,3 +67,6 @@ compile_commands.json
 
 # TypeScript build information
 *.tsbuildinfo
+
+# Private benchmark fixtures must never be committed to this repository.
+/benchmarks/private/
