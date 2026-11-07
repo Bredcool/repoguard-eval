@@ -15,3 +15,7 @@ class TaskLoadError(RepoGuardError):
 
 class ExperimentError(RepoGuardError):
     """Raised when experiment operations fail."""
+
+
+class ExecutionError(RepoGuardError):
+    """Raised when an execution infrastructure operation fails."""

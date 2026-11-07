@@ -2,6 +2,7 @@
 
 from repoguard_eval.exceptions.errors import (
     ConfigurationError,
+    ExecutionError,
     ExperimentError,
     RepoGuardError,
     TaskLoadError,
@@ -9,6 +10,7 @@ from repoguard_eval.exceptions.errors import (
 
 __all__ = [
     "ConfigurationError",
+    "ExecutionError",
     "ExperimentError",
     "RepoGuardError",
     "TaskLoadError",
