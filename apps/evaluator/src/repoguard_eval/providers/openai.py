@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import asyncio
+import json
 import random
+import re
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 from typing import Any
@@ -21,6 +23,8 @@ from repoguard_eval.providers.errors import (
     ProviderTimeoutError,
 )
 from repoguard_eval.providers.schemas.response import (
+    Diagnosis,
+    Patch,
     ProviderRequest,
     ProviderResponse,
     TokenUsage,
@@ -298,6 +302,95 @@ class OpenAIProvider(BaseProvider):
 
         raise ProviderRequestError("OpenAI retry loop ended unexpectedly.")
 
+    @staticmethod
+    def _extract_output_text(data: dict[str, Any]) -> str | None:
+        """Extract text from the Responses API output structure."""
+        direct = data.get("output_text")
+        if isinstance(direct, str) and direct.strip():
+            return direct.strip()
+
+        output = data.get("output")
+        if not isinstance(output, list):
+            return None
+
+        parts: list[str] = []
+        for item in output:
+            if not isinstance(item, dict):
+                continue
+            content = item.get("content")
+            if not isinstance(content, list):
+                continue
+            for block in content:
+                if (
+                    isinstance(block, dict)
+                    and block.get("type") in {"output_text", "text"}
+                    and isinstance(block.get("text"), str)
+                ):
+                    parts.append(block["text"])
+
+        text = "\\n".join(parts).strip()
+        return text or None
+
+    @classmethod
+    def _extract_diagnosis_and_patch(
+        cls,
+        data: dict[str, Any],
+    ) -> tuple[Diagnosis | None, Patch | None]:
+        """Normalize the agent's JSON diagnosis and unified diff."""
+        text = cls._extract_output_text(data)
+        if text is None:
+            return None, None
+
+        candidate = text.strip()
+        fenced = re.fullmatch(
+            r"`{3}(?:json)?\\s*(.*?)\\s*`{3}",
+            candidate,
+            flags=re.IGNORECASE | re.DOTALL,
+        )
+        if fenced:
+            candidate = fenced.group(1)
+
+        try:
+            payload = json.loads(candidate)
+        except (json.JSONDecodeError, TypeError):
+            return None, None
+
+        if not isinstance(payload, dict):
+            return None, None
+
+        diagnosis_data = payload.get("diagnosis")
+        if not isinstance(diagnosis_data, dict):
+            diagnosis_data = {
+                "root_cause": payload.get("root_cause"),
+                "evidence": payload.get("evidence", []),
+            }
+
+        patch_data = payload.get("patch")
+        if isinstance(patch_data, str):
+            patch_data = {"format": "unified_diff", "content": patch_data}
+
+        diagnosis = None
+        patch = None
+        try:
+            if (
+                isinstance(diagnosis_data, dict)
+                and (
+                    diagnosis_data.get("root_cause") is not None
+                    or diagnosis_data.get("evidence")
+                )
+            ):
+                diagnosis = Diagnosis.model_validate(diagnosis_data)
+        except Exception:
+            diagnosis = None
+
+        try:
+            if isinstance(patch_data, dict):
+                patch = Patch.model_validate(patch_data)
+        except Exception:
+            patch = None
+
+        return diagnosis, patch
+
     async def generate(self, request: ProviderRequest) -> ProviderResponse:
         """Send a request and preserve the complete raw API response."""
 
@@ -350,11 +443,15 @@ class OpenAIProvider(BaseProvider):
         if not isinstance(status, str):
             status = None
 
+        diagnosis, patch = self._extract_diagnosis_and_patch(data)
+
         return ProviderResponse(
             provider=self.name,
             model=response_model,
             task_id=request.task_id,
             experiment_id=request.experiment_id,
+            diagnosis=diagnosis,
+            patch=patch,
             usage=self._extract_usage(data),
             response_id=response_id,
             finish_reason=status,
