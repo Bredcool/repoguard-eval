@@ -3,6 +3,10 @@
 
 Evidence-based evaluation benchmark for AI-powered Go repository debugging.
 
+## Video Walkthrough
+
+[Watch the RepoGuard-Eval walkthrough on YouTube](https://www.youtube.com/watch?v=2mSEPReenIQ)
+
 ## Overview
 
 RepoGuard-Eval is a modular benchmark platform designed to evaluate how effectively AI agents investigate, debug, and resolve issues in Go repositories.
