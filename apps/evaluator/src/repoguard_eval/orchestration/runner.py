@@ -25,6 +25,13 @@ from .schemas import (
     TaskRunStatus,
 )
 
+import time
+
+from repoguard_eval.reporting.raw_outputs import RawOutputStore
+from repoguard_eval.reporting.integration import (
+    generate_experiment_report,
+)
+
 logger = logging.getLogger(__name__)
 
 
@@ -114,6 +121,7 @@ class ExperimentOrchestrator:
                 try:
                     return await self._run_task(
                         task_id=task_id,
+                        started = time.perf_counter(),
                         experiment_id=experiment_id,
                         root=root,
                     )
@@ -172,6 +180,51 @@ class ExperimentOrchestrator:
             f"Status: {status}; completed: {completed}; failed: {failed}",
         )
 
+        try:
+            report_paths = generate_experiment_report(
+                artifact_dir=self.artifact_dir,
+                summary=summary,
+                benchmark_name=benchmark_name,
+                benchmark_version=benchmark_version,
+                model=self.model,
+                provider=self.provider.name,
+                task_loader=self.task_loader,
+            )
+
+            summary.metadata["reporting"] = {
+                name: str(path)
+                for name, path in report_paths.items()
+            }
+
+            self._write_json(
+                root / "result.json",
+                summary.model_dump(mode="json"),
+            )
+
+            self._log(
+                root,
+                "reporting_completed",
+                f"Generated {len(report_paths)} report artifacts",
+            )
+
+        except Exception as exc:
+            logger.exception(
+                "Experiment reporting failed: %s",
+                experiment_id,
+            )
+
+            summary.metadata["reporting_error"] = str(exc)
+
+            self._write_json(
+                root / "metadata.json",
+                metadata,
+            )
+
+            self._write_json(
+                root / "result.json",
+                summary.model_dump(mode="json"),
+            )
+
         return summary
 
     async def _run_task(
@@ -213,6 +266,7 @@ class ExperimentOrchestrator:
 
             try:
                 response = await self.provider.generate(request)
+                RawOutputStore(self.artifact_dir).append(response)
             except Exception as exc:
                 result.status = TaskRunStatus.MODEL_FAILED
                 result.error = str(exc)
@@ -316,6 +370,8 @@ class ExperimentOrchestrator:
             logger.exception("Task failed: %s", task_id)
 
         finally:
+            result.duration_seconds = time.perf_counter() - started
+
             if sandbox is not None:
                 try:
                     await asyncio.to_thread(sandbox.cleanup)

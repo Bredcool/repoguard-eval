@@ -32,3 +32,4 @@ class ExperimentRunResult(BaseModel):
     failed_tasks: int
     task_results: list[TaskRunResult] = Field(default_factory=list)
     metadata: dict[str, Any] = Field(default_factory=dict)
+    duration_seconds: float | None = Field(default=None, ge=0)
