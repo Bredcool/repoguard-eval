@@ -1,0 +1,1 @@
+"""Optional read-only dashboard API."""
