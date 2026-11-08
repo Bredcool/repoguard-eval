@@ -1,0 +1,217 @@
+.overview-page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    width: 100%;
+}
+
+.overview-hero {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-6);
+    padding: var(--space-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    background:
+        radial-gradient(ellipse at top right, rgb(101 230 160 / 9%), transparent 55%),
+        var(--color-bg-secondary);
+}
+
+.overview-hero h1 {
+    margin: var(--space-2) 0;
+}
+
+.overview-hero p {
+    max-width: 620px;
+    margin: 0;
+}
+
+.overview-hero__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.health-indicator {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    margin-right: var(--space-2);
+    border-radius: 50%;
+    background: currentColor;
+}
+
+.overview-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-4);
+}
+
+.overview-metric {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-5);
+}
+
+.overview-metric > span {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+}
+
+.overview-metric strong {
+    color: var(--color-text-primary);
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size-3xl);
+}
+
+.overview-metric small {
+    color: var(--color-text-muted);
+}
+
+.overview-content-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(260px, 1fr);
+    gap: var(--space-4);
+}
+
+.overview-panel {
+    padding: var(--space-5);
+}
+
+.overview-panel__heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+}
+
+.overview-panel__heading h2,
+.overview-integrity h2 {
+    margin: 0;
+    font-size: var(--font-size-lg);
+}
+
+.overview-panel__heading p {
+    margin: var(--space-1) 0 0;
+    font-size: var(--font-size-sm);
+}
+
+.overview-panel__heading a {
+    flex-shrink: 0;
+    font-size: var(--font-size-sm);
+}
+
+.overview-experiment-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.overview-experiment {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-4) 0;
+    border-top: 1px solid var(--color-border);
+}
+
+.overview-experiment__main {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+.overview-experiment__main a {
+    overflow: hidden;
+    color: var(--color-text-primary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.overview-experiment__main .experiment-id {
+    overflow: hidden;
+    color: var(--color-text-muted);
+    text-overflow: ellipsis;
+}
+
+.overview-experiment__meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+    white-space: nowrap;
+}
+
+.overview-integrity > .eyebrow {
+    display: block;
+    margin-bottom: var(--space-3);
+}
+
+.overview-integrity h2 {
+    margin-bottom: var(--space-2);
+}
+
+.overview-integrity > p {
+    margin: 0 0 var(--space-5);
+    font-size: var(--font-size-sm);
+}
+
+.integrity-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-3) 0;
+    border-top: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+}
+
+@media (max-width: 1000px) {
+    .overview-metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .overview-content-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .overview-hero,
+    .overview-hero__actions {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .overview-experiment {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .overview-experiment__meta {
+        justify-content: space-between;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .overview-metrics {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .overview-metric {
+        padding: var(--space-4);
+    }
+
+    .overview-metric strong {
+        font-size: var(--font-size-2xl);
+    }
+}

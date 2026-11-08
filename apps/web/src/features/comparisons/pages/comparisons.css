@@ -1,0 +1,43 @@
+.comparison-card {
+    padding: 0;
+    overflow: hidden;
+}
+
+.comparison-table {
+    min-width: 1050px;
+}
+
+.comparison-model {
+    color: var(--color-text-primary);
+    font-weight: var(--font-weight-semibold);
+}
+
+.comparison-metric {
+    color: var(--color-text-primary) !important;
+    font-family: var(--font-family-mono);
+    font-variant-numeric: tabular-nums;
+}
+
+.comparison-note {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+}
+
+.filter-control input {
+    min-width: 180px;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-primary);
+    color: var(--color-text-primary);
+}
+
+.filter-control input::placeholder {
+    color: var(--color-text-muted);
+}
+
+.filter-control input:focus {
+    border-color: var(--color-border-focus);
+    outline: 2px solid var(--color-accent-subtle);
+}

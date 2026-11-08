@@ -1,5 +1,5 @@
-
 import { configureStore } from '@reduxjs/toolkit'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Provider } from 'react-redux'
 import { createMemoryRouter, RouterProvider } from 'react-router-dom'
 import { render, screen } from '@testing-library/react'
@@ -16,6 +16,14 @@ function renderWithRouter(initialEntry: string) {
         },
     })
 
+    const queryClient = new QueryClient({
+        defaultOptions: {
+            queries: {
+                retry: false,
+            },
+        },
+    })
+
     const testRouter = createMemoryRouter(appRouteDefinitions, {
         initialEntries: [initialEntry],
     })
@@ -23,11 +31,14 @@ function renderWithRouter(initialEntry: string) {
     return {
         ...render(
             <Provider store={testStore}>
-                <RouterProvider router={testRouter} />
+                <QueryClientProvider client={queryClient}>
+                    <RouterProvider router={testRouter} />
+                </QueryClientProvider>
             </Provider>,
         ),
         router: testRouter,
         store: testStore,
+        queryClient,
     }
 }
 
@@ -36,6 +47,7 @@ describe('Application router', () => {
         ['/', 'RepoGuard-Eval'],
         ['/repositories', 'Repositories'],
         ['/benchmarks', 'Benchmarks'],
+        ['/experiments', 'Experiments'],
         ['/evaluations', 'Evaluations'],
         ['/results', 'Results'],
         ['/documentation', 'Documentation'],
@@ -60,9 +72,7 @@ describe('Application router', () => {
             }),
         ).toBeInTheDocument()
 
-        expect(
-            screen.getByRole('banner'),
-        ).toBeInTheDocument()
+        expect(screen.getByRole('banner')).toBeInTheDocument()
     })
 
     it('renders the not found page for an unknown route', () => {
@@ -92,8 +102,8 @@ describe('Application router', () => {
         renderWithRouter('/')
 
         await user.click(
-            screen.getByRole('button', {
-                name: 'View documentation',
+            screen.getByRole('link', {
+                name: 'Documentation',
             }),
         )
 

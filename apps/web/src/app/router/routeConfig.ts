@@ -28,6 +28,20 @@ export const appRoutes = {
         group: 'workspace',
         showInNavigation: true,
     },
+    experiments: {
+        path: '/experiments',
+        label: 'Experiments',
+        description: 'Browse persisted evaluation experiments.',
+        group: 'workspace',
+        showInNavigation: true,
+    },
+    comparisons: {
+        path: '/comparisons',
+        label: 'Model Comparison',
+        description: 'Compare persisted model evaluation metrics.',
+        group: 'workspace',
+        showInNavigation: true,
+    },
     evaluations: {
         path: '/evaluations',
         label: 'Evaluations',

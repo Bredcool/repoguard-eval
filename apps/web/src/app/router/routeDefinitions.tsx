@@ -7,9 +7,12 @@ import OverviewPage from '../../features/overview/pages/OverviewPage'
 import RepositoriesPage from '../../features/repositories/pages/RepositoriesPage'
 import BenchmarksPage from '../../features/benchmarks/pages/BenchmarksPage'
 import EvaluationsPage from '../../features/evaluations/pages/EvaluationsPage'
+import ExperimentsPage from '../../features/experiments/pages/ExperimentsPage'
+import ExperimentDetailPage from '../../features/experiments/pages/ExperimentDetailPage'
 import ResultsPage from '../../features/results/pages/ResultsPage'
 import DocumentationPage from '../../features/documentation/pages/DocumentationPage'
 import AboutPage from '../../features/about/pages/AboutPage'
+import ModelComparisonPage from '../../features/comparisons/pages/ModelComparisonPage'
 
 export function NotFoundPage() {
     return (
@@ -38,6 +41,14 @@ export const appRouteDefinitions: RouteObject[] = [
                 element: <BenchmarksPage />,
             },
             {
+                path: 'experiments',
+                element: <ExperimentsPage />,
+            },
+            {
+                path: 'experiments/:experimentId',
+                element: <ExperimentDetailPage />,
+            },
+            {
                 path: 'evaluations',
                 element: <EvaluationsPage />,
             },
@@ -52,6 +63,10 @@ export const appRouteDefinitions: RouteObject[] = [
             {
                 path: 'about',
                 element: <AboutPage />,
+            },
+            {
+                path: 'comparisons',
+                element: <ModelComparisonPage />,
             },
         ],
     },

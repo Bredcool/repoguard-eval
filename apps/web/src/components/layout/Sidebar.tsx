@@ -53,7 +53,9 @@ function Sidebar() {
                             {route.path === '/repositories' && '⌘'}
                             {route.path === '/benchmarks' && '▦'}
                             {route.path === '/evaluations' && '▶'}
+                            {route.path === '/experiments' && '◉'}
                             {route.path === '/results' && '▤'}
+                            {route.path === '/comparisons' && '⇄'}
                         </span>
 
                         {!isCollapsed && (

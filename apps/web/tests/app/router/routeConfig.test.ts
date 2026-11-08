@@ -1,21 +1,20 @@
-
 import { describe, expect, it } from 'vitest'
 import { appRoutes } from '../../../src/app/router/routeConfig'
 
 describe('appRoutes', () => {
-    it('defines all seven application routes', () => {
-        expect(Object.keys(appRoutes)).toHaveLength(7)
+    it('defines all nine application routes', () => {
+        expect(Object.keys(appRoutes)).toHaveLength(9)
     })
 
     it('defines the expected route paths', () => {
-        const paths = Object.values(appRoutes).map(
-            (route) => route.path,
-        )
+        const paths = Object.values(appRoutes).map((route) => route.path)
 
         expect(paths).toEqual([
             '/',
             '/repositories',
             '/benchmarks',
+            '/experiments',
+            '/comparisons',
             '/evaluations',
             '/results',
             '/documentation',
@@ -28,13 +27,13 @@ describe('appRoutes', () => {
             (route) => route.group === 'workspace',
         )
 
-        expect(workspaceRoutes).toHaveLength(5)
-        expect(
-            workspaceRoutes.map((route) => route.label),
-        ).toEqual([
+        expect(workspaceRoutes).toHaveLength(7)
+        expect(workspaceRoutes.map((route) => route.label)).toEqual([
             'Overview',
             'Repositories',
             'Benchmarks',
+            'Experiments',
+            'Model Comparison',
             'Evaluations',
             'Results',
         ])
@@ -46,16 +45,15 @@ describe('appRoutes', () => {
         )
 
         expect(resourceRoutes).toHaveLength(2)
-        expect(
-            resourceRoutes.map((route) => route.label),
-        ).toEqual(['Documentation', 'About'])
+        expect(resourceRoutes.map((route) => route.label)).toEqual([
+            'Documentation',
+            'About',
+        ])
     })
 
     it('makes all defined routes visible in navigation', () => {
         expect(
-            Object.values(appRoutes).every(
-                (route) => route.showInNavigation,
-            ),
+            Object.values(appRoutes).every((route) => route.showInNavigation),
         ).toBe(true)
     })
 
@@ -68,9 +66,7 @@ describe('appRoutes', () => {
     })
 
     it('defines unique paths', () => {
-        const paths = Object.values(appRoutes).map(
-            (route) => route.path,
-        )
+        const paths = Object.values(appRoutes).map((route) => route.path)
 
         expect(new Set(paths).size).toBe(paths.length)
     })
